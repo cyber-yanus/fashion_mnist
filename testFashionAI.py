@@ -6,6 +6,7 @@ from tensorflow import keras
 
 # Вспомогательные библиотеки
 import math
+import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -20,7 +21,7 @@ with open('train-labels-idx1-ubyte.gz','rb') as f:
     train_labels = extract_labels(f)
 
 with open('t10k-images-idx3-ubyte.gz','rb') as f:
-    test_images = extract_images(f)
+   test_images = extract_images(f)
 
 with open('t10k-labels-idx1-ubyte.gz','rb') as f:
     test_labels = extract_labels(f)
@@ -36,13 +37,16 @@ test_images = np.squeeze(test_images, 3)
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
+
 model = keras.models.load_model('model.h5')
 model.summary()
 
-
 predictions = model.predict(test_images)
 
-print(predictions[0])
 
-print('предположение сети '+class_names[np.argmax(predictions[1])])
-print('правильный ответ '+ class_names[test_labels[1]])
+print(predictions[5])
+#print(class_names[np.argmax(predictions)])
+
+
+print('предположение сети '+class_names[np.argmax(predictions[5])])
+print('правильный ответ '+ class_names[test_labels[5]])
